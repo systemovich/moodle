@@ -45,6 +45,7 @@ class mustache_string_helper {
      * {{#str}}activity{{/str}}
      * {{#str}}actionchoice, core, {{#str}}delete{{/str}}{{/str}} (Nested)
      * {{#str}}addinganewto, core, {"what":"This", "to":"That"}{{/str}} (Complex $a)
+     * {{#str}}{{variable}}, core{{/str}}
      *
      * The args are comma separated and only the first is required.
      * The last is a $a argument for get string. For complex data here, use JSON.
@@ -56,7 +57,7 @@ class mustache_string_helper {
     public function str($text, Mustache_LambdaHelper $helper) {
         // Split the text into an array of variables.
         $key = strtok($text, ",");
-        $key = trim($key);
+        $key = trim($helper->render($key));
         $component = strtok(",");
         $component = trim($component);
         if (!$component) {
